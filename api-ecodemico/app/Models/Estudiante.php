@@ -16,4 +16,9 @@ class Estudiante extends Model
         'nombre',
         'correo',
     ];
+
+    public function inscripciones()
+    {
+        return $this->hasMany(Inscripcion::class);
+    }
 }
