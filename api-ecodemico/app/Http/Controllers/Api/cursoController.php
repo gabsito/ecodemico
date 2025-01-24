@@ -35,14 +35,18 @@ class cursoController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|max:255',
-            'codigo' => 'required|max:10',
+            'codigo' => 'required|max:10|unique:curso,codigo',
             'docente' => 'required|max:255',
             'aula' => 'required|max:255',
             'dia' => 'required|in:lunes,martes,miercoles,jueves,viernes,sabado,domingo',
             'hora_inicio' => 'required|date_format:H:i',
-            'hora_fin' => 'required|date_format:H:i',
+            'hora_fin' => 'required|date_format:H:i|after:hora_inicio',
             'periodo_academico_id' => 'required|exists:periodo_academico,id'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Datos incorrectos', 'errors' => $validator->errors()], 400);
+        }
 
         // validar que un curso no tenga el mismo horario en la misma aula
         $curso = Curso::where('dia', $request->dia)
