@@ -37,7 +37,6 @@ class periodoController extends Controller
             'nombre' => 'required',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date',
-            'activo' => 'required|boolean'
         ]);
 
         if ($validator->fails()) {

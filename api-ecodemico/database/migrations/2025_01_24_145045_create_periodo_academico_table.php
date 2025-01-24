@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
+            $table->boolean('activo')->default(false);
             $table->timestamps();
         });
     }

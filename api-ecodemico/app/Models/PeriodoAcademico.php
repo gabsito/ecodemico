@@ -10,7 +10,8 @@ class PeriodoAcademico extends Model
     protected $fillable = [
         'nombre',
         'fecha_inicio',
-        'fecha_fin'
+        'fecha_fin',
+        'activo'
     ];
 
     public function cursos()
