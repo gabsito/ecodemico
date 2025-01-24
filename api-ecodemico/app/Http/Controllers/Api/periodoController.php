@@ -65,7 +65,6 @@ class periodoController extends Controller
             'nombre' => 'required',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date',
-            'activo' => 'required|boolean'
         ]);
 
         if ($validator->fails()) {
@@ -73,6 +72,46 @@ class periodoController extends Controller
         }
 
         $periodo->update($request->all());
+
+        return response()->json(['data' => $periodo], 200);
+    }
+
+    public function updatePartial(Request $request, $id)
+    {
+        $periodo = PeriodoAcademico::find($id);
+
+        if (!$periodo) {
+            return response()->json(['message' => 'Periodo no encontrado'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'max:255',
+            'fecha_inicio' => 'date',
+            'fecha_fin' => 'date',
+            'activo' => 'boolean'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Datos incorrectos', 'errors' => $validator->errors()], 400);
+        }
+
+        if ($request->has('nombre')) {
+            $periodo->nombre = $request->nombre;
+        }
+
+        if ($request->has('fecha_inicio')) {
+            $periodo->fecha_inicio = $request->fecha_inicio;
+        }
+
+        if ($request->has('fecha_fin')) {
+            $periodo->fecha_fin = $request->fecha_fin;
+        }
+
+        if ($request->has('activo')) {
+            $periodo->activo = $request->activo;
+        }
+
+        $periodo->save();
 
         return response()->json(['data' => $periodo], 200);
     }
@@ -133,5 +172,5 @@ class periodoController extends Controller
         return response()->json(['data' => $periodo], 200);
     }
 
-    
+
 }

@@ -30,6 +30,9 @@ Route::patch('/inscripciones/{id}', [InscripcionController::class, 'updatePartia
 Route::delete('/inscripciones/{id}', [InscripcionController::class, 'destroy']);
 
 Route::get('/periodos', [PeriodoController::class, 'index']);
+Route::get('/periodos/activo', [PeriodoController::class, 'activo']);
+Route::put('/periodos/{id}/activar', [PeriodoController::class, 'activar']);
+Route::put('/periodos/{id}/desactivar', [PeriodoController::class, 'desactivar']);
 Route::get('/periodos/{id}', [PeriodoController::class, 'show']);
 Route::post('/periodos', [PeriodoController::class, 'store']);
 Route::put('/periodos/{id}', [PeriodoController::class, 'update']);

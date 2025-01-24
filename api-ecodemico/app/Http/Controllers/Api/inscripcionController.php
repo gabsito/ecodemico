@@ -50,6 +50,14 @@ class inscripcionController extends Controller
             'estudiante_id' => 'required|exists:estudiante,id'
         ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Datos incorrectos',
+                'errors' => $validator->errors(),
+                'status' => 400
+            ], 400);
+        }
+
         $inscripciones = Inscripcion::where('curso_id', $request->curso_id)->get();
 
         if ($inscripciones->count() >= $this->maxPerAula) {
@@ -59,13 +67,6 @@ class inscripcionController extends Controller
             ], 400);
         }
 
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Datos incorrectos',
-                'errors' => $validator->errors(),
-                'status' => 400
-            ], 400);
-        }
 
         $inscripcion = Inscripcion::create($request->all());
 
@@ -90,6 +91,19 @@ class inscripcionController extends Controller
                 'message' => 'Inscripcion no encontrada',
                 'status' => 404
             ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'curso_id' => 'exists:curso,id',
+            'estudiante_id' => 'exists:estudiante,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Datos incorrectos',
+                'errors' => $validator->errors(),
+                'status' => 400
+            ], 400);
         }
 
         $inscripcion->update($request->all());
@@ -137,4 +151,23 @@ class inscripcionController extends Controller
             'data' => $inscripcion
         ], 200);
     }   
+
+    public function destroy($id)
+    {
+        $inscripcion = Inscripcion::find($id);
+
+        if (!$inscripcion) {
+            return response()->json([
+                'message' => 'Inscripcion no encontrada',
+                'status' => 404
+            ], 404);
+        }
+
+        $inscripcion->delete();
+
+        return response()->json([
+            'message' => 'Inscripcion eliminada correctamente',
+            'status' => 200
+        ], 200);
+    }
 }
