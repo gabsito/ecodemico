@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('curso', function (Blueprint $table) {
+        Schema::create('cursos', function (Blueprint $table) {
             $table->id();
             $table->string('codigo');
             $table->string('nombre');
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('dia');
             $table->time('hora_inicio');
             $table->time('hora_fin');
-            $table->foreignId('periodo_academico_id')->constrained();
+            $table->foreignId('periodos_academicos_id')->constrained();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('curso');
+        Schema::dropIfExists('cursos');
     }
 };

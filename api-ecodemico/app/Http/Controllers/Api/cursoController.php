@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\inscripcionController;
 use App\Models\Curso;
 
 class cursoController extends Controller
@@ -35,13 +36,13 @@ class cursoController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|max:255',
-            'codigo' => 'required|max:10|unique:curso,codigo',
+            'codigo' => 'required|max:10|unique:cursos,codigo',
             'docente' => 'required|max:255',
             'aula' => 'required|max:255',
             'dia' => 'required|in:lunes,martes,miercoles,jueves,viernes,sabado,domingo',
             'hora_inicio' => 'required|date_format:H:i',
             'hora_fin' => 'required|date_format:H:i|after:hora_inicio',
-            'periodo_academico_id' => 'required|exists:periodo_academico,id'
+            'periodos_academicos_id' => 'required|exists:periodos_academicos,id'
         ]);
 
         if ($validator->fails()) {
@@ -93,6 +94,9 @@ class cursoController extends Controller
             return response()->json(['message' => 'Curso no encontrado'], 404);
         }
 
+        // borrar inscripciones
+        app(inscripcionController::class)->borrarInscripcionesPorCurso($curso->id);
+
         $curso->delete();
 
         return response()->json(['message' => 'Curso eliminado'], 200);
@@ -114,7 +118,7 @@ class cursoController extends Controller
             'dia' => 'in:lunes,martes,miercoles,jueves,viernes,sabado,domingo',
             'hora_inicio' => 'date_format:H:i',
             'hora_fin' => 'date_format:H:i',
-            'periodo_academico_id' => 'exists:periodo_academico,id'
+            'periodos_academicos_id' => 'exists:periodos_academicos,id'
         ]);
 
         if ($validator->fails()) {
@@ -149,8 +153,8 @@ class cursoController extends Controller
             $curso->hora_fin = $request->hora_fin;
         }
 
-        if ($request->has('periodo_academico_id')) {
-            $curso->periodo_academico_id = $request->periodo_academico_id;
+        if ($request->has('periodos_academicos_id')) {
+            $curso->periodos_academicos_id = $request->periodos_academicos_id;
         }
 
         $curso->save();

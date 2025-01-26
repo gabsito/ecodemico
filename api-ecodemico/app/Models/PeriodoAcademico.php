@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PeriodoAcademico extends Model
 {
-    protected $table = 'periodo_academico';
+    protected $table = 'periodos_academicos';
     protected $fillable = [
         'nombre',
         'fecha_inicio',

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('periodo_academico', function (Blueprint $table) {
+        Schema::create('periodos_academicos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->date('fecha_inicio');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('periodo_academico');
+        Schema::dropIfExists('periodos_academicos');
     }
 };

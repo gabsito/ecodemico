@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Estudiante;
+use App\Http\Controllers\Api\inscripcionController;
 
 class estudianteController extends Controller
 {
@@ -46,7 +47,7 @@ class estudianteController extends Controller
         $validator = Validator::make($request->all(), [
             'matricula' => 'required',
             'nombre' => 'required',
-            'correo' => 'required|email|unique:estudiante'
+            'correo' => 'required|email|unique:estudiantes'
         ]);
 
         if ($validator->fails()) {
@@ -87,7 +88,7 @@ class estudianteController extends Controller
         $validator = Validator::make($request->all(), [
             'matricula' => 'required',
             'nombre' => 'required',
-            'correo' => 'required|email|unique:estudiante'
+            'correo' => 'required|email|unique:estudiantes'
         ]);
 
         if ($validator->fails()) {
@@ -121,7 +122,7 @@ class estudianteController extends Controller
         $validator = Validator::make($request->all(), [
             'matricula' => 'max:10',
             'nombre' => 'max:255',
-            'correo' => 'email|unique:estudiante'
+            'correo' => 'email|unique:estudiantes'
         ]);
 
         if ($validator->fails()) {
@@ -161,6 +162,9 @@ class estudianteController extends Controller
                 'status' => 404
             ], 404);
         }
+
+        // borrar inscripciones
+        app(inscripcionController::class)->borrarInscripcionesPorEstudiante($id);
 
         $estudiante->delete();
 

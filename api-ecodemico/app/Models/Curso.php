@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Curso extends Model
 {
-    protected $table = 'curso';
+    use HasFactory;
+
+    protected $table = 'cursos';
     protected $fillable = [
         'codigo',
         'nombre',
@@ -15,7 +18,7 @@ class Curso extends Model
         'dia',
         'hora_inicio',
         'hora_fin',
-        'periodo_academico_id'
+        'periodos_academicos_id'
     ];
 
     public function periodoAcademico()

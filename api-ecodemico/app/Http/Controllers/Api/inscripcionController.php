@@ -46,8 +46,8 @@ class inscripcionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'curso_id' => 'required|exists:curso,id',
-            'estudiante_id' => 'required|exists:estudiante,id'
+            'cursos_id' => 'required|exists:cursos,id',
+            'estudiantes_id' => 'required|exists:estudiantes,id'
         ]);
 
         if ($validator->fails()) {
@@ -58,7 +58,7 @@ class inscripcionController extends Controller
             ], 400);
         }
 
-        $inscripciones = Inscripcion::where('curso_id', $request->curso_id)->get();
+        $inscripciones = Inscripcion::where('cursos_id', $request->cursos_id)->get();
 
         if ($inscripciones->count() >= $this->maxPerAula) {
             return response()->json([
@@ -94,8 +94,8 @@ class inscripcionController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'curso_id' => 'exists:curso,id',
-            'estudiante_id' => 'exists:estudiante,id'
+            'cursos_id' => 'exists:cursos,id',
+            'estudiantes_id' => 'exists:estudiantes,id'
         ]);
 
         if ($validator->fails()) {
@@ -125,8 +125,8 @@ class inscripcionController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'curso_id' => 'exists:curso,id',
-            'estudiante_id' => 'exists:estudiante,id'
+            'cursos_id' => 'exists:cursos,id',
+            'estudiantes_id' => 'exists:estudiantes,id'
         ]);
 
         if ($validator->fails()) {
@@ -137,12 +137,12 @@ class inscripcionController extends Controller
             ], 400);
         }
 
-        if ($request->has('curso_id')) {
-            $inscripcion->curso_id = $request->curso_id;
+        if ($request->has('cursos_id')) {
+            $inscripcion->cursos_id = $request->cursos_id;
         }
 
-        if ($request->has('estudiante_id')) {
-            $inscripcion->estudiante_id = $request->estudiante_id;
+        if ($request->has('estudiantes_id')) {
+            $inscripcion->estudiantes_id = $request->estudiantes_id;
         }
 
         $inscripcion->save();
@@ -169,5 +169,55 @@ class inscripcionController extends Controller
             'message' => 'Inscripcion eliminada correctamente',
             'status' => 200
         ], 200);
+    }
+
+    public function inscripcionesPorEstudiante($id)
+    {
+        $inscripciones = Inscripcion::where('estudiantes_id', $id)->get();
+
+        if ($inscripciones->isEmpty()) {
+            return response()->json([
+                'message' => 'No hay inscripciones registradas para el estudiante',
+                'status' => 200
+            ], 200);
+        }
+
+        return response()->json([
+            'data' => $inscripciones
+        ], 200);
+    }
+
+    public function inscripcionesPorCurso($id)
+    {
+        $inscripciones = Inscripcion::where('cursos_id', $id)->get();
+
+        if ($inscripciones->isEmpty()) {
+            return response()->json([
+                'message' => 'No hay inscripciones registradas para el curso',
+                'status' => 200
+            ], 200);
+        }
+
+        return response()->json([
+            'data' => $inscripciones
+        ], 200);
+    }
+
+    public function borrarInscripcionesPorEstudiante($id)
+    {
+        $inscripciones = Inscripcion::where('estudiantes_id', $id)->get();
+
+        foreach ($inscripciones as $inscripcion) {
+            $inscripcion->delete();
+        }
+    }
+
+    public function borrarInscripcionesPorCurso($id)
+    {
+        $inscripciones = Inscripcion::where('cursos_id', $id)->get();
+
+        foreach ($inscripciones as $inscripcion) {
+            $inscripcion->delete();
+        }
     }
 }

@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Inscripcion extends Model
 {
-    protected $table = 'inscripcion';
+    use HasFactory;
+
+    protected $table = 'inscripciones';
     protected $fillable = [
-        'curso_id',
-        'estudiante_id'
+        'cursos_id',
+        'estudiantes_id'
     ];
 
     public function curso()
