@@ -30,12 +30,9 @@ export default function Home() {
             const data = await response.json();
 
             if (data.status === 'success' && data.pdf) {
-                // Crear URL del PDF desde base64
                 const pdfContent = `data:application/pdf;base64,${data.pdf}`;
                 setPdfUrl(pdfContent);
 
-                // Opcionalmente, puedes abrir en una nueva pestaña
-                // window.open(pdfContent, '_blank');
             } else {
                 showError('Error al generar el PDF');
             }
@@ -57,6 +54,36 @@ export default function Home() {
             document.body.removeChild(link);
         }
     };
+
+	const exportExcel = async (tablename: string) => {
+		try {
+			setIsLoading(true);
+			const response = await fetch(`http://localhost:8000/api/excel/${tablename}`);
+			
+			if (!response.ok) {
+				throw new Error('Error al generar el Excel');
+			}
+	
+			const blob = await response.blob();
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `${tablename}_${new Date().toISOString().split('T')[0]}.xlsx`;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			window.URL.revokeObjectURL(url);
+		} catch (error) {
+			console.error(error);
+			toast.current?.show({
+				severity: 'error',
+				summary: 'Error',
+				detail: 'Error al generar el Excel'
+			});
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
     return (
         <>
@@ -95,6 +122,13 @@ export default function Home() {
                     className="w-64"
                 />
             </div>
+			<Button 
+				label="Exportar Excel" 
+				icon="pi pi-file-excel"
+				onClick={() => exportExcel('estudiantes')}
+				loading={isLoading}
+				className="p-button-success"
+			/>
 
             {pdfUrl && (
                 <div className="mt-4 p-4">
