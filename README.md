@@ -225,3 +225,213 @@ El reporte generado incluye:
 
 Esta vista proporciona una interfaz completa para que los estudiantes gestionen sus inscripciones y accedan a su información académica de manera eficiente.
 
+
+Aquí está la documentación de la API para el README:
+
+# Documentación de la API
+
+## Base URL
+```
+http://localhost:8000/api
+```
+
+## Endpoints
+
+### Estudiantes
+
+#### Obtener todos los estudiantes
+```http
+GET /estudiantes
+```
+
+#### Obtener un estudiante específico
+```http
+GET /estudiantes/{id}
+```
+
+#### Crear un estudiante
+```http
+POST /estudiantes
+```
+Ejemplo de payload:
+```json
+{
+    "matricula": "123456",
+    "nombre": "Gabriel Castro",
+    "correo": "gabo@test.com"
+}
+```
+
+#### Actualizar un estudiante (completo)
+```http
+PUT /estudiantes/{id}
+```
+Ejemplo de payload:
+```json
+{
+    "matricula": "123456",
+    "nombre": "Gabriel Castro",
+    "correo": "gabo@test.com"
+}
+```
+
+#### Actualizar un estudiante (parcial)
+```http
+PATCH /estudiantes/{id}
+```
+Ejemplo de payload:
+```json
+{
+    "nombre": "Gabriel Castro Actualizado"
+}
+```
+
+#### Eliminar un estudiante
+```http
+DELETE /estudiantes/{id}
+```
+
+### Cursos
+
+#### Obtener todos los cursos
+```http
+GET /cursos
+```
+
+#### Obtener un curso específico
+```http
+GET /cursos/{id}
+```
+
+#### Crear un curso
+```http
+POST /cursos
+```
+Ejemplo de payload:
+```json
+{
+    "codigo": "CursoP1",
+    "nombre": "Curso prueba",
+    "docente": "Docente prueba",
+    "aula": "Aula prueba",
+    "dia": "lunes",
+    "hora_inicio": "08:00",
+    "hora_fin": "10:00",
+    "periodos_academicos_id": "1"
+}
+```
+
+#### Actualizar un curso (completo)
+```http
+PUT /cursos/{id}
+```
+
+#### Actualizar un curso (parcial)
+```http
+PATCH /cursos/{id}
+```
+
+#### Eliminar un curso
+```http
+DELETE /cursos/{id}
+```
+
+### Períodos Académicos
+
+#### Obtener todos los períodos
+```http
+GET /periodos
+```
+
+#### Obtener un período específico
+```http
+GET /periodos/{id}
+```
+
+#### Crear un período
+```http
+POST /periodos
+```
+Ejemplo de payload:
+```json
+{
+    "nombre": "Período Académico 2025 - I",
+    "fecha_inicio": "2025-01-15",
+    "fecha_fin": "2025-06-30"
+}
+```
+
+#### Actualizar un período (completo)
+```http
+PUT /periodos/{id}
+```
+
+#### Actualizar un período (parcial)
+```http
+PATCH /periodos/{id}
+```
+
+#### Eliminar un período
+```http
+DELETE /periodos/{id}
+```
+
+#### Activar un período
+```http
+PUT /periodos/{id}/activar
+```
+
+#### Desactivar un período
+```http
+PUT /periodos/{id}/desactivar
+```
+
+#### Obtener período activo
+```http
+GET /periodos/activo
+```
+
+### Inscripciones
+
+#### Obtener todas las inscripciones
+```http
+GET /inscripciones
+```
+
+#### Obtener una inscripción específica
+```http
+GET /inscripciones/{id}
+```
+
+#### Crear una inscripción
+```http
+POST /inscripciones
+```
+Ejemplo de payload:
+```json
+{
+    "cursos_id": "2",
+    "estudiantes_id": "2"
+}
+```
+
+#### Actualizar una inscripción (completo)
+```http
+PUT /inscripciones/{id}
+```
+
+#### Actualizar una inscripción (parcial)
+```http
+PATCH /inscripciones/{id}
+```
+
+#### Eliminar una inscripción
+```http
+DELETE /inscripciones/{id}
+```
+
+## Notas
+- Todos los endpoints retornan respuestas en formato JSON
+- Los códigos de estado HTTP estándar son utilizados para indicar el éxito o fracaso de las operaciones
+- Las actualizaciones parciales (PATCH) permiten modificar solo los campos específicos que se envían
+- La API implementa validaciones para asegurar la integridad de los datos
