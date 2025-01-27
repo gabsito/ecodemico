@@ -6,11 +6,12 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const routes = [
+const routes = [
     {template : () => <h1 className='text-center text-2xl font-bold my-4'>Ecodemico</h1>},
-    {label: 'Dashboard', icon: 'pi pi-fw pi-home', url: '/'},
+    {label: 'Reportes', icon: 'pi pi-fw pi-chart-bar', url: '/'},
     {label: 'Periodos', icon: 'pi pi-fw pi-calendar', url: '/periodos'},
     {label: 'Cursos', icon: 'pi pi-fw pi-book', url: '/cursos'},
+    {label: 'Estudiantes', icon: 'pi pi-fw pi-users', url: '/estudiantes'},
   ]
 
   return (
