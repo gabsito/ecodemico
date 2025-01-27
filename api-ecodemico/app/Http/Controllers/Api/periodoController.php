@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\PeriodoAcademico;
+use App\Http\Controllers\Api\cursoController;
+use App\Models\Curso;
 
 class periodoController extends Controller
 {
@@ -122,8 +124,11 @@ class periodoController extends Controller
         if (!$periodo) {
             return response()->json(['message' => 'Periodo no encontrado'], 404);
         }
-
-        $periodo->delete();
+        try {
+            $periodo->delete();
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'No se puede eliminar un periodo con cursos registrados.'], 400);
+        }
 
         return response()->json(['message' => 'Periodo eliminado correctamente'], 200);
     }

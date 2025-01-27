@@ -162,4 +162,15 @@ class cursoController extends Controller
         return response()->json(['data' => $curso], 200);
     }
 
+    public function cursosPorPeriodo($id)
+    {
+        $cursos = Curso::where('periodos_academicos_id', $id)->get();
+
+        if ($cursos->isEmpty()) {
+            return response()->json('No se encontraron cursos para el periodo academico', 404);
+        }
+
+        return response()->json(['data' => $cursos], 200);
+    }
+
 }
