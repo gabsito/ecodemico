@@ -15,6 +15,8 @@ Route::put('/estudiantes/{id}', [EstudianteController::class, 'update']);
 Route::patch('/estudiantes/{id}', [EstudianteController::class, 'updatePartial']);
 Route::delete('/estudiantes/{id}', [EstudianteController::class, 'destroy']);
 
+Route::get('/estudiantes/{id}/inscripciones', [InscripcionController::class, 'inscripcionesPorEstudiante']);
+
 Route::get('/cursos', [CursoController::class, 'index']);
 Route::get('/cursos/{id}', [CursoController::class, 'show']);
 Route::post('/cursos', [CursoController::class, 'store']);

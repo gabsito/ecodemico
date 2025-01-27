@@ -11,6 +11,7 @@ import { Toolbar } from 'primereact/toolbar';
 import { Nullable } from 'primereact/ts-helpers';
 import { Curso } from '@/types/curso';
 import { Periodo } from '@/types/periodo';
+import Head from 'next/head';
 
 
 export default function Cursos() {
@@ -242,6 +243,9 @@ export default function Cursos() {
 
     return (
         <>
+            <Head>
+                <title>Cursos - Ecodemico</title>
+            </Head>
             <div className='p-4'>
                 <div className='flex flex-row justify-between align-items-center'>
                     <h1 className='text-2xl font-bold my-4'>Cursos</h1>
@@ -250,6 +254,7 @@ export default function Cursos() {
                 <DataTable value={cursos} selectionMode={'single'} selection={selectedCurso}
                     onSelectionChange={e => setSelectedCurso(e.value as Curso)}
                     dataKey='id' className='p-datatable-striped'
+                    paginator rows={5} rowsPerPageOptions={[5, 10, 25]}
                 >
                     <Column field='codigo' header='Codigo'></Column>
                     <Column field='nombre' header='Nombre'></Column>

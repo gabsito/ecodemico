@@ -7,6 +7,7 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { useEffect, useState, useRef } from 'react';
 import { Toolbar } from 'primereact/toolbar';
 import { Estudiante } from '@/types/estudiante';
+import Head from 'next/head';
 
 
 export default function Estudiantes() {
@@ -187,6 +188,9 @@ export default function Estudiantes() {
 
     return (
         <>
+            <Head>
+                <title>Estudiantes - Ecodemico</title>
+            </Head>
             <div className='p-4'>
                 <div className='flex flex-row justify-between align-items-center'>
                     <h1 className='text-2xl font-bold my-4'>Estudiantes</h1>
@@ -195,6 +199,7 @@ export default function Estudiantes() {
                 <DataTable value={estudiantes} selectionMode={'single'} selection={selectedEstudiante}
                     onSelectionChange={e => setSelectedEstudiante(e.value as Estudiante)}
                     dataKey='id' className='p-datatable-striped'
+                    paginator rows={5} rowsPerPageOptions={[5, 10, 25]}
                 >
                     <Column field='matricula' header='Matricula'></Column>
                     <Column field='nombre' header='Nombre'></Column>

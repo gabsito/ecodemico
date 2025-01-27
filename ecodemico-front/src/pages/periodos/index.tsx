@@ -7,6 +7,7 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { useEffect, useState, useRef } from 'react';
 import { Toolbar } from 'primereact/toolbar';
 import { Periodo } from '@/types/periodo';
+import Head from 'next/head';
 
 
 export default function Periodos() {
@@ -176,6 +177,9 @@ export default function Periodos() {
 
     return (
         <>
+            <Head>
+                <title>Periodos - Ecodemico</title>
+            </Head>
             <div className='p-4'>
                 <div className='flex flex-row justify-between align-items-center'>
                     <h1 className='text-2xl font-bold my-4'>Periodos</h1>
@@ -184,6 +188,7 @@ export default function Periodos() {
                 <DataTable value={periodos} selectionMode={'single'} selection={selectedPeriodo}
                     onSelectionChange={e => setSelectedPeriodo(e.value as Periodo)}
                     dataKey='id' className='p-datatable-striped'
+                    paginator rows={5} rowsPerPageOptions={[5, 10, 25]}
                 >
                     <Column field='id' header='ID'></Column>
                     <Column field='nombre' header='Nombre'></Column>

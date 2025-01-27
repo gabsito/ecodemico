@@ -12,12 +12,14 @@ const routes = [
     {label: 'Periodos', icon: 'pi pi-fw pi-calendar', url: '/periodos'},
     {label: 'Cursos', icon: 'pi pi-fw pi-book', url: '/cursos'},
     {label: 'Estudiantes', icon: 'pi pi-fw pi-users', url: '/estudiantes'},
+    {label: 'Inscripciones', icon: 'pi pi-fw pi-pencil', url: '/inscripciones'},
+    {label: 'Portal Estudiantil', icon: 'pi pi-fw pi-user', url: '/portal_estudiante'},
   ]
 
   return (
     <div className='flex flex-row h-screen'>
         <Menu model={routes} className='w-1/6 h-full'/>
-        <main className='w-5/6 p-4'>
+        <main className='w-5/6 p-4 overflow-y-auto'>
             {children}
         </main>
     </div>
