@@ -39,7 +39,7 @@ class cursoController extends Controller
             'codigo' => 'required|max:10|unique:cursos,codigo',
             'docente' => 'required|max:255',
             'aula' => 'required|max:255',
-            'dia' => 'required|in:lunes,martes,miercoles,jueves,viernes,sabado,domingo',
+            'dia' => 'required|in:Lunes,Martes,Miércoles,Jueves,Viernes,Sábado,Domingo',
             'hora_inicio' => 'required|date_format:H:i',
             'hora_fin' => 'required|date_format:H:i|after:hora_inicio',
             'periodos_academicos_id' => 'required|exists:periodos_academicos,id'
@@ -49,11 +49,20 @@ class cursoController extends Controller
             return response()->json(['message' => 'Datos incorrectos', 'errors' => $validator->errors()], 400);
         }
 
-        // validar que un curso no tenga el mismo horario en la misma aula
+        // // validar que un curso no tenga el mismo horario en la misma aula
+        // $curso = Curso::where('dia', $request->dia)
+        //     ->where('aula', $request->aula)
+        //     ->where('hora_inicio', '<', $request->hora_fin)
+        //     ->where('hora_fin', '>', $request->hora_inicio)
+        //     ->first();
+
+        // validar que un curso no tenga horarios cruzados en la misma aula
         $curso = Curso::where('dia', $request->dia)
             ->where('aula', $request->aula)
-            ->where('hora_inicio', '<', $request->hora_fin)
-            ->where('hora_fin', '>', $request->hora_inicio)
+            ->where(function ($query) use ($request) {
+                $query->where('hora_inicio', '<', $request->hora_fin)
+                    ->where('hora_fin', '>', $request->hora_inicio);
+            })
             ->first();
 
         if ($curso) {
@@ -115,7 +124,7 @@ class cursoController extends Controller
             'codigo' => 'max:10',
             'docente' => 'max:255',
             'aula' => 'max:255',
-            'dia' => 'in:lunes,martes,miercoles,jueves,viernes,sabado,domingo',
+            'dia' => 'in:Lunes,Martes,Miércoles,Jueves,Viernes,Sábado,Domingo',
             'hora_inicio' => 'date_format:H:i',
             'hora_fin' => 'date_format:H:i',
             'periodos_academicos_id' => 'exists:periodos_academicos,id'

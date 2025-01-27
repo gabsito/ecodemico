@@ -10,6 +10,7 @@ export default function Layout({ children }: LayoutProps) {
     {template : () => <h1 className='text-center text-2xl font-bold my-4'>Ecodemico</h1>},
     {label: 'Dashboard', icon: 'pi pi-fw pi-home', url: '/'},
     {label: 'Periodos', icon: 'pi pi-fw pi-calendar', url: '/periodos'},
+    {label: 'Cursos', icon: 'pi pi-fw pi-book', url: '/cursos'},
   ]
 
   return (

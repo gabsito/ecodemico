@@ -6,13 +6,8 @@ import { Toast } from 'primereact/toast';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { useEffect, useState, useRef } from 'react';
 import { Toolbar } from 'primereact/toolbar';
+import { Periodo } from '@/types/periodo';
 
-interface Periodo {
-    id: number;
-    nombre: string;
-    fecha_inicio: string;
-    fecha_fin: string;
-}
 
 export default function Periodos() {
     const [periodos, setPeriodos] = useState<Periodo[]>([]);
@@ -48,7 +43,7 @@ export default function Periodos() {
     const handleGuardarPeriodo = () => {
         // Realizar la solicitud POST
         fetch('http://localhost:8000/api/periodos', {
-            method: 'PATCH',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -74,8 +69,8 @@ export default function Periodos() {
         try {
             // clean empty fields
             for (const key in putPeriodo) {
-                if (putPeriodo[key] === '') {
-                    delete putPeriodo[key];
+                if (putPeriodo[key as keyof typeof putPeriodo] === '') {
+                    delete putPeriodo[key as keyof typeof putPeriodo];
                 }
             }
 
