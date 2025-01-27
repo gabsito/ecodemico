@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\EstudianteController;
 use App\Http\Controllers\Api\CursoController;
 use App\Http\Controllers\Api\InscripcionController;
 use App\Http\Controllers\Api\PeriodoController;
-use App\Http\Controllers\Api\pdfController;
+use App\Http\Controllers\Api\PDFController;
 use App\Http\Controllers\Api\ExcelController;
 
 Route::get('/estudiantes', [EstudianteController::class, 'index']);
@@ -18,8 +18,9 @@ Route::patch('/estudiantes/{id}', [EstudianteController::class, 'updatePartial']
 Route::delete('/estudiantes/{id}', [EstudianteController::class, 'destroy']);
 
 Route::get('/estudiantes/{id}/inscripciones', [InscripcionController::class, 'inscripcionesPorEstudiante']);
-Route::get('/PDF/{tablename}', [pdfController::class, 'generatePDF']);
+Route::get('/PDF/{tablename}', [PDFController::class, 'generatePDF']);
 Route::get('/excel/{tablename}', [ExcelController::class, 'export']);
+Route::get('/PDF/estudiante/{id}', [PDFController::class, 'generateEstudianteReport']);
 
 Route::get('/cursos', [CursoController::class, 'index']);
 Route::get('/cursos/{id}', [CursoController::class, 'show']);

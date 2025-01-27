@@ -13,7 +13,6 @@ const routes = [
     {label: 'Cursos', icon: 'pi pi-fw pi-book', url: '/cursos'},
     {label: 'Estudiantes', icon: 'pi pi-fw pi-users', url: '/estudiantes'},
     {label: 'Inscripciones', icon: 'pi pi-fw pi-pencil', url: '/inscripciones'},
-    {label: 'Portal Estudiantil', icon: 'pi pi-fw pi-user', url: '/portal_estudiante'},
   ]
 
   return (

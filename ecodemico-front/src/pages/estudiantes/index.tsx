@@ -158,6 +158,7 @@ export default function Estudiantes() {
         <div className='flex flex-row gap-1'>
             <Button icon='pi pi-pencil' className='p-button-rounded p-button-success p-mr-2' disabled={!selectedEstudiante} onClick={() => setVisiblePUT(true)}></Button>
             <Button icon='pi pi-trash' className='p-button-rounded p-button-danger' onClick={() => confirmEliminarEstudiante()} disabled={!selectedEstudiante}></Button>
+            <Button icon='pi pi-eye' className='p-button-rounded' disabled={!selectedEstudiante} onClick={() => confirmVerPortal()} ></Button>
         </div>
     );
 
@@ -165,6 +166,16 @@ export default function Estudiantes() {
         <Button label='Nuevo estudiante' icon='pi pi-plus' onClick={() => setVisible(true)}></Button>
     );
 
+    const confirmVerPortal = () => {
+        confirmDialog({
+            message: '¿Estás seguro que deseas ver el portal de este estudiante?',
+            header: 'Confirmar acción',
+            icon: 'pi pi-exclamation-triangle',
+            acceptClassName: 'p-button-success',
+            acceptLabel: 'Sí',
+            accept: () => window.open(`http://localhost:3000/portal_estudiante/${selectedEstudiante?.id}`)
+        });
+    };
 
     const confirmEliminarEstudiante = () => {
         confirmDialog({

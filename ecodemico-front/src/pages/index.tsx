@@ -96,39 +96,64 @@ export default function Home() {
                     <h1 className='text-2xl font-bold my-4'>Reportes</h1>
                 </div>
             </div>
-            <div className="flex flex-col gap-4 items-center p-4">
-                <Button 
-                    label='Ver reporte Estudiantes' 
-                    onClick={() => reporte("estudiantes")}
-                    loading={isLoading}
-                    className="w-64"
-                />
-                <Button 
-                    label='Ver reporte Inscripciones' 
-                    onClick={() => reporte("inscripciones")}
-                    loading={isLoading}
-                    className="w-64"
-                />
-                <Button 
-                    label='Ver reporte Cursos' 
-                    onClick={() => reporte("cursos")}
-                    loading={isLoading}
-                    className="w-64"
-                />
-                <Button 
-                    label='Ver reporte Periodos Académicos' 
-                    onClick={() => reporte("periodos")}
-                    loading={isLoading}
-                    className="w-64"
-                />
-            </div>
-			<Button 
-				label="Exportar Excel" 
-				icon="pi pi-file-excel"
-				onClick={() => exportExcel('estudiantes')}
-				loading={isLoading}
-				className="p-button-success"
-			/>
+			<div className="flex flex-row gap-4 items-center p-4">
+				<div className="flex flex-col gap-4 items-center p-4">
+					<Button 
+						label='Ver reporte Estudiantes' 
+						onClick={() => reporte("estudiantes")}
+						loading={isLoading}
+						className="w-64"
+					/>
+					<Button 
+						label='Ver reporte Inscripciones' 
+						onClick={() => reporte("inscripciones")}
+						loading={isLoading}
+						className="w-64"
+					/>
+					<Button 
+						label='Ver reporte Cursos' 
+						onClick={() => reporte("cursos")}
+						loading={isLoading}
+						className="w-64"
+					/>
+					<Button 
+						label='Ver reporte Periodos Académicos' 
+						onClick={() => reporte("periodos")}
+						loading={isLoading}
+						className="w-64"
+					/>
+				</div>
+				<div className="flex flex-col gap-4 items-center p-4">
+					<Button 
+						label="Exportar Excel de estudiantes" 
+						icon="pi pi-file-excel"
+						onClick={() => exportExcel('estudiantes')}
+						loading={isLoading}
+						className="p-button-success"
+					/>
+					<Button 
+						label="Exportar Excel de inscripciones" 
+						icon="pi pi-file-excel"
+						onClick={() => exportExcel('inscripciones')}
+						loading={isLoading}
+						className="p-button-success"
+					/>
+					<Button 
+						label="Exportar Excel de cursos" 
+						icon="pi pi-file-excel"
+						onClick={() => exportExcel('cursos')}
+						loading={isLoading}
+						className="p-button-success"
+					/>
+					<Button 
+						label="Exportar Excel de periodos" 
+						icon="pi pi-file-excel"
+						onClick={() => exportExcel('periodos')}
+						loading={isLoading}
+						className="p-button-success"
+					/>
+				</div>
+			</div>
 
             {pdfUrl && (
                 <div className="mt-4 p-4">

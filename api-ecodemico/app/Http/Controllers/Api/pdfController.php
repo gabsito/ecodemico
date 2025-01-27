@@ -13,7 +13,7 @@ use App\Models\Curso;
 use App\Models\Estudiante;
 use App\Models\Inscripcion;
 
-class PDFController extends Controller  // Nombres de clases en PascalCase
+class PDFController extends Controller
 {
     // Array asociativo para mapear nombres de tablas con sus modelos
     private const TABLE_MODELS = [
@@ -158,4 +158,159 @@ class PDFController extends Controller  // Nombres de clases en PascalCase
 
         return $dompdf->output();
     }
+
+    /**
+ * Genera un PDF con el reporte detallado de un estudiante
+ *
+ * @param int $estudianteId
+ * @return \Illuminate\Http\Response
+ */
+public function generateEstudianteReport(int $estudianteId)
+{
+    try {
+        // Obtener estudiante con sus inscripciones y cursos relacionados
+        $estudiante = Estudiante::with(['inscripciones.curso'])
+            ->find($estudianteId);
+
+        if (!$estudiante) {
+            return response()->json([
+                'message' => 'Estudiante no encontrado',
+                'status' => 404
+            ], 404);
+        }
+
+        // Generar HTML para el reporte
+        $html = $this->generateEstudianteHTML($estudiante);
+        $pdfOutput = $this->createPDF($html);
+        
+        // Generar nombre de archivo
+        $filename = sprintf(
+            'reporte_estudiante_%s_%s.pdf',
+            $estudiante->matricula,
+            now()->format('Ymd_His')
+        );
+
+        // Convertir el PDF a base64
+        $base64 = base64_encode($pdfOutput);
+        
+        return response()->json([
+            'status' => 'success',
+            'filename' => $filename,
+            'pdf' => $base64
+        ]);
+
+    } catch (Exception $e) {
+        return response()->json([
+            'message' => 'Error al generar el PDF del estudiante',
+            'error' => $e->getMessage()
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+}
+
+/**
+ * Genera el HTML para el reporte de estudiante
+ *
+ * @param Estudiante $estudiante
+ * @return string
+ */
+private function generateEstudianteHTML(Estudiante $estudiante): string
+{
+    // Generar filas de la tabla de cursos
+    $cursosRows = $estudiante->inscripciones->map(function ($inscripcion) {
+        $curso = $inscripcion->curso;
+        $horario = "{$curso->dia} {$curso->hora_inicio} - {$curso->hora_fin}";
+        return <<<HTML
+            <tr>
+                <td>{$curso->nombre}</td>
+                <td>{$curso->codigo}</td>
+                <td>{$curso->aula}</td>
+                <td>{$horario}</td>
+                <td>{$curso->docente}</td>
+            </tr>
+        HTML;
+    })->join('');
+
+    $totalCursos = $estudiante->inscripciones->count();
+
+    return <<<HTML
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Reporte de Estudiante</title>
+        <style>
+            body { 
+                font-family: 'DejaVu Sans', sans-serif;
+                padding: 20px;
+            }
+            .header {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .estudiante-info {
+                margin-bottom: 30px;
+                padding: 15px;
+                background-color: #f8f9fa;
+                border-radius: 5px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+                font-size: 12px;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            .total {
+                text-align: right;
+                font-weight: bold;
+                padding: 10px;
+                background-color: #f8f9fa;
+                border-radius: 5px;
+            }
+            h1 { color: #333; }
+            h2 { color: #666; font-size: 18px; }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Reporte de Estudiante</h1>
+        </div>
+        
+        <div class="estudiante-info">
+            <h2>Información del Estudiante</h2>
+            <p><strong>Nombre:</strong> {$estudiante->nombre}</p>
+            <p><strong>Matrícula:</strong> {$estudiante->matricula}</p>
+            <p><strong>Correo:</strong> {$estudiante->correo}</p>
+        </div>
+
+        <h2>Cursos Inscritos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Curso</th>
+                    <th>Código</th>
+                    <th>Aula</th>
+                    <th>Horario</th>
+                    <th>Docente</th>
+                </tr>
+            </thead>
+            <tbody>
+                {$cursosRows}
+            </tbody>
+        </table>
+
+        <div class="total">
+            <p>Total de cursos inscritos: {$totalCursos}</p>
+        </div>
+    </body>
+    </html>
+    HTML;
+}
 }

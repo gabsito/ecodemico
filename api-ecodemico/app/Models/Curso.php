@@ -27,7 +27,7 @@ class Curso extends Model
     }
 
     public function inscripciones()
-    {
-        return $this->hasMany(Inscripcion::class);
-    }
+{
+    return $this->hasMany(Inscripcion::class, 'cursos_id');
+}
 }

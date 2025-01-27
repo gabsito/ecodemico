@@ -18,7 +18,7 @@ class Estudiante extends Model
     ];
 
     public function inscripciones()
-    {
-        return $this->hasMany(Inscripcion::class);
-    }
+{
+    return $this->hasMany(Inscripcion::class, 'estudiantes_id');
+}
 }

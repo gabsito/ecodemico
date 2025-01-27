@@ -49,13 +49,6 @@ class cursoController extends Controller
             return response()->json(['message' => 'Datos incorrectos', 'errors' => $validator->errors()], 400);
         }
 
-        // // validar que un curso no tenga el mismo horario en la misma aula
-        // $curso = Curso::where('dia', $request->dia)
-        //     ->where('aula', $request->aula)
-        //     ->where('hora_inicio', '<', $request->hora_fin)
-        //     ->where('hora_fin', '>', $request->hora_inicio)
-        //     ->first();
-
         // validar que un curso no tenga horarios cruzados en la misma aula
         $curso = Curso::where('dia', $request->dia)
             ->where('aula', $request->aula)

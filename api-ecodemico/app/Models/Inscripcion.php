@@ -16,12 +16,12 @@ class Inscripcion extends Model
     ];
 
     public function curso()
-    {
-        return $this->belongsTo(Curso::class);
-    }
+{
+    return $this->belongsTo(Curso::class, 'cursos_id');
+}
 
-    public function estudiante()
-    {
-        return $this->belongsTo(Estudiante::class);
-    }
+public function estudiante()
+{
+    return $this->belongsTo(Estudiante::class, 'estudiantes_id');
+}
 }
