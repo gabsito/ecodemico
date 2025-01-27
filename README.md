@@ -3,6 +3,8 @@
 ## Descripción
 Este proyecto es una prueba para Ecotec. El objetivo es demostrar las habilidades y conocimientos en desarrollo de software.
 El proyecto consta de dos subproyectos que deben ser levantados para su trabajo en conjunto.
+No hay que configurar la base de datos ya que este proyecto usa sqlite.
+Tambien adjunto la coleccion de postman en formato JSON.
 
 ## Estructura del Proyecto
 - `/api-ecodemico`: Backend del proyecto desarrollado en Laravel.
