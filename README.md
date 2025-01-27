@@ -1,4 +1,4 @@
-# Proyecto Ecotec
+# Ecodemico
 
 ## Descripción
 Este proyecto es una prueba para Ecotec. El objetivo es demostrar las habilidades y conocimientos en desarrollo de software.
