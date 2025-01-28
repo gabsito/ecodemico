@@ -78,8 +78,6 @@ La pantalla de reportes proporciona una interfaz para visualizar y exportar info
 -Exportar Excel de periodos: Permite obtener un archivo Excel con los períodos académicos.
 
 
-Puedes agregar esta sección al README:
-
 ## Pantalla de Períodos Académicos
 Esta pantalla permite la gestión de los períodos académicos del sistema. Presenta una interfaz con los siguientes elementos:
 
@@ -166,8 +164,6 @@ Al hacer clic en el botón de "Ver Detalle" (👁️), se accede a una página e
 
 **Nota**: Como en otras secciones, los botones de acción solo se habilitan cuando se selecciona un registro de la tabla, previniendo acciones accidentales.
 
-Aquí está la descripción de la pantalla de Inscripciones para el README:
-
 ## Pantalla de Inscripciones
 Esta pantalla permite la gestión de las inscripciones de estudiantes a cursos, presentando una interfaz organizada con los siguientes elementos:
 
@@ -225,8 +221,6 @@ El reporte generado incluye:
 
 Esta vista proporciona una interfaz completa para que los estudiantes gestionen sus inscripciones y accedan a su información académica de manera eficiente.
 
-
-Aquí está la documentación de la API para el README:
 
 # Documentación de la API
 
