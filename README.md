@@ -1,5 +1,7 @@
 # Ecodemico
 
+Proyecto para mostrar habilidades de react y next
+
 ## Descripción
 Este proyecto es una prueba para Ecotec. El objetivo es demostrar las habilidades y conocimientos en desarrollo de software.
 El proyecto consta de dos subproyectos que deben ser levantados para su trabajo en conjunto.
